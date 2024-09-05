@@ -1,0 +1,23 @@
+@use "sass" as *;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.join-meeting {
+  width: auto;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: #e95a5a;
+  cursor: pointer;
+  color: white !important;
+  border: none;
+}
+.join-meeting:hover {
+  background-color: white !important;
+  color: #e95a5a !important;
+  border: 1px solid #e95a5a;
+  font-weight: 600;
+}
