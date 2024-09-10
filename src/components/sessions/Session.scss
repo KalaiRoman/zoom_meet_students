@@ -18,3 +18,30 @@
     cursor: pointer;
     border: 1px solid #c7ffd8;
 }
+
+.days-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px 0px;
+}
+
+.active {
+    width: auto;
+    padding: 5px 20px;
+    border-radius: 5px;
+    background-color: #e95a5a;
+    cursor: pointer;
+    color: white !important;
+    border: none;
+}
+
+.inactive {
+    width: auto;
+    padding: 5px 20px;
+    border-radius: 5px;
+    background-color: grey;
+    cursor: pointer;
+    color: white !important;
+    border: none;
+}

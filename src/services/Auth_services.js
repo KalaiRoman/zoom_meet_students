@@ -1,19 +1,6 @@
 // import PostMethod from './../apis/PostMethod';
 
 import axiosInterceptor from "../axiosconfig/interceptor";
-
-// export const Login_services=async(datas)=>{
-//     try {
-//        return ""
-//     } catch (error) {
-//         return{
-//            error:error?.response?.data?.message
-            
-//         }
-//     }
-// }
-
-
 export const apiGet = async (url) => {
     try {
       const response = await axiosInterceptor.get(`${url}`);

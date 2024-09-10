@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useState,useEffect } from "react";
 import { Row, Col ,Form } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./styles/Signin.scss";
@@ -8,6 +8,10 @@ import { ToastError, ToastSuccess } from "../../middleware/ToastModel";
 import {useDispatch,useSelector} from 'react-redux';
 import { useApi } from "../../apis/GetMethod";
 const Login = memo(() => {
+
+  const socket=useSelector((state)=>state?.socket?.socket)
+
+  console.log(socket,'socket')
   const {data, loading, error, fetchData}=useApi()
   let history = useNavigate();
   const dispatch=useDispatch();
@@ -40,11 +44,9 @@ const Login = memo(() => {
       const datas = { email, password,role:"student" };
       try {
          fetchData("POST","/auth/zoom/login",datas)
-        // if (data || token) {
-        //     dispatch(LoginUserAction(token));
-        //     ToastSuccess("User Login Successfully!!");
-        //     history("/home"); 
-        // }
+            ToastSuccess("User Login Successfully!!");
+            history("/"); 
+        socket.emit("user-login","kalaisurya")
       } catch (err) {
         ToastError("An error occurred during login.");
       } finally {
@@ -52,6 +54,9 @@ const Login = memo(() => {
       }
     }
   };
+
+
+
   if(loginReducer?.token)
   {
 return <Navigate to="/home"/>
