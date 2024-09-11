@@ -57,7 +57,7 @@ const Login = memo(() => {
           ToastSuccess("User Login Successfully!!");
           setTimeout(() => {
     window.location.assign(window.location.href);
-            // window.location.reload(false)
+            window.location.reload(false)
           }, 500);
           dispatch(loginUserToken(response?.token));
         }
@@ -65,7 +65,7 @@ const Login = memo(() => {
           ToastSuccess("User Login Successfully!!");
           setTimeout(() => {
           history("/dashboard"); 
-            // window.location.reload(false)
+            window.location.reload(false)
           }, 500);
           dispatch(loginUserToken(response?.token));
         }
@@ -108,7 +108,7 @@ return <Navigate to="/dashboard"/>
             </div>
                 </div>
                 <div className="mt-5">
-                  <span className="signin-section">Sign in User</span>{" "}
+                  <span className="signin-section">Sign in Users</span>{" "}
                 </div>
                 <div className="mt-3">
                  
