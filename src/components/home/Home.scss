@@ -1,0 +1,38 @@
+@use "../../sass/abstract/" as *;
+
+.main-home-section {
+    width: 100%;
+    height: 100%;
+    .inside-home-section {
+        width: 100%;
+        height: 100%;
+        .main-box-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-top: 2%;
+        }
+        .Box-today {
+            width: 23.5%;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+}
+
+.text-sizes {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.metting-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding-top: 4%;
+}

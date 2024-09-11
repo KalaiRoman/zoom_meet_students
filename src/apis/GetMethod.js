@@ -28,12 +28,11 @@
 // }
 
 // export default GetMethod
-
 // useApi.js
 import { useState, useEffect, useCallback } from 'react';
 import { apiGet,apiPost } from '../services/Auth_services';
 export const useApi = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fetchData = async (method, url, payload = null) => {
@@ -45,6 +44,7 @@ export const useApi = () => {
         result = await apiGet(url);
       } else if (method === 'POST') {
         result = await apiPost(url, payload);
+        console.log(result,"result")
       }
       setData(result);
     } catch (error) {

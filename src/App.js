@@ -17,7 +17,6 @@ function App() {
     withCredentials: true,  
   }); 
 
-  console.log(socketConnection,'socketConnection')
 
   const [socket, setSocket] = useState(null);
 
@@ -42,7 +41,7 @@ function App() {
       console.log('Socket disconnected on component unmount');
     };
 
-  }, []); 
+  }, [socketConnection]); 
   return (
     <div className="App">
       <Routing />

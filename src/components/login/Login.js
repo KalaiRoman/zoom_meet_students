@@ -1,20 +1,27 @@
 import { memo, useState,useEffect } from "react";
 import { Row, Col ,Form } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import "./styles/Signin.scss";
 import Spinner from "react-bootstrap/Spinner";
 import React from "react";
 import { ToastError, ToastSuccess } from "../../middleware/ToastModel";
 import {useDispatch,useSelector} from 'react-redux';
 import { useApi } from "../../apis/GetMethod";
+import { loginUserToken } from "../../redux/Reducers/Login_Reducers";
+import { loginUser } from "../../services/Auth_services";
 const Login = memo(() => {
-
   const socket=useSelector((state)=>state?.socket?.socket)
-
-  console.log(socket,'socket')
   const {data, loading, error, fetchData}=useApi()
   let history = useNavigate();
   const dispatch=useDispatch();
+
+  const [getparams,setGetParams]=useSearchParams();
+
+  
+
+
+
+  const paramsURL=window.location.href.includes("roomID");
   const loginReducer=useSelector((state)=>state?.login);
   const [formState, setFormState] = useState(false);
   const [showicon, setShowicon] = useState(false);
@@ -43,10 +50,26 @@ const Login = memo(() => {
       setFormState(true);  
       const datas = { email, password,role:"student" };
       try {
-         fetchData("POST","/auth/zoom/login",datas)
-            ToastSuccess("User Login Successfully!!");
-            history("/"); 
-        socket.emit("user-login","kalaisurya")
+        const response=await loginUser(datas);
+
+        if(paramsURL)
+        {
+          ToastSuccess("User Login Successfully!!");
+          setTimeout(() => {
+    window.location.assign(window.location.href);
+            window.location.reload(false)
+          }, 500);
+          dispatch(loginUserToken(response?.token));
+        }
+        else{
+          ToastSuccess("User Login Successfully!!");
+          setTimeout(() => {
+          history("/dashboard"); 
+            window.location.reload(false)
+          }, 500);
+          dispatch(loginUserToken(response?.token));
+        }
+           
       } catch (err) {
         ToastError("An error occurred during login.");
       } finally {
@@ -56,10 +79,15 @@ const Login = memo(() => {
   };
 
 
+  useEffect(()=>{
+
+  },[data])
+
+
 
   if(loginReducer?.token)
   {
-return <Navigate to="/home"/>
+return <Navigate to="/dashboard"/>
   }
   else
   {

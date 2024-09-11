@@ -13,8 +13,20 @@ export const apiGet = async (url) => {
   export const apiPost = async (url, data) => {
     try {
       const response = await axiosInterceptor.post(`${url}`, data);
-      return response.data;
+
+      console.log(response,'response')
+      return response;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Error posting data');
     }
   };
+
+
+  export const loginUser=async(data)=>{
+    try {
+      const response = await axiosInterceptor.post(`/auth/zoom/login`, data);
+      return response?.data;
+    } catch (error) {
+      return error;
+    }
+  }

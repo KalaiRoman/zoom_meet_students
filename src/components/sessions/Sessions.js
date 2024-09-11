@@ -10,11 +10,10 @@ function Sessions() {
   const { data, loading, error, fetchData } = useApi();
   const navigate = useNavigate();
   const [get, setParams] = useSearchParams();
-
   const [getData, setGetData] = useState([]);
   const [getData1, setGetData1] = useState([]);
   const [resultData, setResultData] = useState([]);
-  const [active, setActive] = useState('Today');
+  const [active, setActive] = useState(get.get("Name")?get.get("Name"):'Today');
 
   useEffect(() => {
     fetchData('GET', '/zoom/meeting/get-zoom-meet', null);
@@ -33,10 +32,8 @@ function Sessions() {
     const result = [];
     const today = moment();
     const tomorrow = moment().add(1, 'days');
-
     AllData?.forEach((item) => {
       const meetingDate = moment(item?.MeetingDate);
-
       if (active === 'Today' && meetingDate.isSame(today, 'day')) {
         result.push({ ...item, isToday: true });
       } else if (active === 'Tomorrow' && meetingDate.isSame(tomorrow, 'day')) {
@@ -45,7 +42,6 @@ function Sessions() {
         result.push({ ...item, isYesterday: true });
       }
     });
-
     setResultData(result);
   }, [AllData, active]);
 
@@ -54,9 +50,7 @@ function Sessions() {
       const handleNewMeeting = (message) => {
         setGetData1(message || []);
       };
-
       socket.on('new-meeting', handleNewMeeting);
-
       return () => {
         socket.off('new-meeting', handleNewMeeting);
       };
@@ -68,6 +62,11 @@ function Sessions() {
       setGetData(data.data);
     }
   }, [data]);
+
+
+  const joinMeeting=(paramsid)=>{
+    navigate(`/join?roomID=${paramsid}`)
+  }
 
   return (
     <div>
@@ -87,23 +86,23 @@ function Sessions() {
       <div className="main-session-cards">
         {resultData?.map((item, index) => (
           <div className="card-sessions fs-3 mb-3" key={index}>
-            <div className="fw-bold">
+            <div className="fw-bold fs-4">
               {item?.name}
             </div>
             <div className="mt-3">
               {moment(item?.MeetingDate).isSame(moment(), 'day') ? (
-                <button className="join-meeting">Join</button>
+                <button className="join-meeting" onClick={()=>joinMeeting(item?.MeetingId)}>Join</button>
               ) : moment(item?.MeetingDate).isBefore(moment(), 'day') ? (
-                <button className="join-meeting-end">Meeting Expired</button>
+                <button className="join-meeting-end">Expired</button>
               ) : (
-                <button className="join-meeting-comming">Meeting Upcoming</button>
+                <button className="join-meeting-comming">Upcoming</button>
               )}
             </div>
           </div>
         ))}
 
         <div className="text-center mt-5 mb-5 w-100 fs-2 fw-bold">
-          {resultData?.length === 0 && <div>No Data Found <span style={{ color: "#e95a5a" }}>{active}</span>...</div>}
+          {resultData?.length === 0 && <div>No Metting Assign <span style={{ color: "#e95a5a" }}>{active}</span>...</div>}
         </div>
       </div>
     </div>
