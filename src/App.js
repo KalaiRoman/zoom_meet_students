@@ -12,7 +12,7 @@ function App() {
 
   const dispatch=useDispatch();
 
-  const socketConnection = io('https://flipkart-clone-2vnu.onrender.com/flip/ecommerce',{
+  const socketConnection = io('https://flipkart-clone-2vnu.onrender.com',{
     transports: ['websocket'], 
     withCredentials: true,  
   }); 
