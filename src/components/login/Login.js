@@ -108,7 +108,7 @@ return <Navigate to="/dashboard"/>
             </div>
                 </div>
                 <div className="mt-5">
-                  <span className="signin-section">Sign in User</span>{" "}
+                  <span className="signin-section">Sign in Users</span>{" "}
                 </div>
                 <div className="mt-3">
                  
